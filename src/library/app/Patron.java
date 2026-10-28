@@ -1,5 +1,9 @@
 package library.app;
 
+import java.util.ArrayList;
+
+import library.model.LibraryItem;
+
 public class Patron
 {
     private ArrayList<LibraryItem> itemList;
@@ -31,8 +35,19 @@ public class Patron
         return balance;
     }
 
+    public int itemCount(){
+        return itemList.size();
+    }
+
+    public int getLateFee(){
+        if (balance > 0) {
+            return 0;
+        }
+        return balance;
+    }
+
     public void checkOut(LibraryItem item, int dayI){
-        if(itemList.size() < 3){
+        if(itemCount() < 3){
             itemList.add(item);
         }
     }
