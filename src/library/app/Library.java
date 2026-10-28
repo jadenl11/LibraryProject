@@ -19,7 +19,7 @@ import library.model.LibraryItem;
  * text to print, or throws an exception when a rule is broken.
  */
 public class Library
-{
+{ hello
     List<Patron> patronList = new ArrayList<Patron>();
     List<LibraryItem> itemList = new ArrayList<LibraryItem>();
     // TODO: what does the Library need to remember? (Fields must be private.)
@@ -173,5 +173,18 @@ public class Library
     {
         // TODO
         throw new LibraryException("REPORT is not written yet.");
+    }
+
+    private Patron findPatron(String patronId){
+        for(Patron patron : patronList){
+            if(patron.getId().equals(patronId))
+                return patron;
+        }
+    }
+    private LibraryItem findItem(String itemId){
+        for(LibraryItem item : itemList){
+            if(item.getId().equals(itemId))
+                return item;
+        }
     }
 }
