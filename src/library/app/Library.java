@@ -160,6 +160,12 @@ public class Library
 
     private String status(String patronId) throws LibraryException
     {
+        for(Patron patron : patronList){
+            if(patron.getId().equals(patronId)){
+                patron.pay(cents);
+                return patron.getName() + " has payed " + cents;
+            }
+        }
         throw new LibraryException("STATUS is not written yet.");
     }
 
