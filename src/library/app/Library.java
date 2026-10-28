@@ -19,13 +19,16 @@ import library.model.LibraryItem;
  * text to print, or throws an exception when a rule is broken.
  */
 public class Library
-<<<<<<< HEAD
 {
-=======
-{ hello
->>>>>>> parent of d90033f (Merge branch 'main' of https://github.com/jadenl11/LibraryProject)
-    List<Patron> patronList = new ArrayList<Patron>();
-    List<LibraryItem> itemList = new ArrayList<LibraryItem>();
+    List<Patron> patronList;
+    List<LibraryItem> itemList;
+    private int day;
+
+    public Library(){
+        List<Patron> patronList = new ArrayList<Patron>();
+        List<LibraryItem> itemList = new ArrayList<LibraryItem>();
+        day = 1;
+    }
     // TODO: what does the Library need to remember? (Fields must be private.)
 
     /* ================= PROVIDED: command reading ================= */
@@ -97,9 +100,8 @@ public class Library
 
     private String addPatron(String id, String name) throws LibraryException
     {
-        // TODO
             patronList.add(new Patron(id, name));
-        throw new LibraryException("PATRON is not written yet.");
+            return "Added patron " + id + " (" + name + ")"
     }
 
     /** type is "BOOK", "DVD", or "MAGAZINE". */
@@ -112,54 +114,39 @@ public class Library
             itemList.add(new Dvd(id, title));
         else if(type.equals("Magazine"))
             itemList.add(new Dvd(id, title));
-        throw new LibraryException(type + " is not written yet.");
+        return "Added " + type + " " + id + " \"" + title + "\"";
     }
 
     private String checkOut(String patronId, String itemId) throws LibraryException
     {
-        for(Patron patron : patronList){
-            if(patron.getId().equals(patronId)){
-                for(LibraryItem item : itemList){
-                    if(item.getId().equals(itemId)){
-                        item.setAvailable(false);
-                        patron.checkOut(itemId);
-                    }
-                }
-            }
-        }
-        // TODO
-        throw new LibraryException("CHECKOUT is not written yet.");
+        Patron patron = findPatron(patronId);
+        LibraryItem item = findItem(itemId);
+        patron.checkOut(item);
+        item.setAvailable(false);
+        item.checkOut(day);
+        return patron.getName() + " checked out " + "\"" + item.getName() + "\" (" + id + ")" + ", due day " + item.getDueDay() + ".";
     }
 
-    private String returnItem(String itemId) throws LibraryException
+    private String returnItem(String patronId, String itemId) throws LibraryException
     {
-        for(LibratyItem item : itemList){
-            if(item.getId().equals(itemId))
-                item.setAvailable(true);
-        }
-        throw new LibraryException("RETURN is not written yet.");
+        LibraryItem item = findItem(itemId);
+        item.setAvailable(true);
+        pay(patronId, cents);
+        return "returned \"" + item.getName() + "\""; 
     }
 
     /** days arrives as text. It might not be a number. */
     private String advance(String days) throws LibraryException
     {
-        // TODO
-        for(Patron patron : patronList){
-            patron.dayCount(days);
-        }
-        throw new LibraryException("ADVANCE is not written yet.");
+        day += Integer.parseInt(days);
+        return "Advanced " + days + " days";
     }
 
     /** cents arrives as text. It might not be a number. */
     private String pay(String patronId, String cents) throws LibraryException
     {
-        for(Patron patron : patronList){
-            if(patron.getId().equals(patronId)){
-                patron.pay(cents);
-                return patron.getName() + " has payed " + cents;
-            }
-        }
-        throw new LibraryException("PAY is not written yet.");
+        Patron patron = findPatron(patronId);
+        patron.pay(Integer.parseInt(cents));
     }
 
     private String status(String patronId) throws LibraryException
@@ -179,16 +166,18 @@ public class Library
         throw new LibraryException("REPORT is not written yet.");
     }
 
-    private Patron findPatron(String patronId){
+    private Patron findPatron(String patronId) throws LibraryException{
         for(Patron patron : patronList){
             if(patron.getId().equals(patronId))
                 return patron;
         }
+        throw new LibraryException("Patron does not exist");
     }
-    private LibraryItem findItem(String itemId){
+    private LibraryItem findItem(String itemId) throws LibraryException{
         for(LibraryItem item : itemList){
             if(item.getId().equals(itemId))
                 return item;
         }
+        throw new LibraryException("Item does not exist");
     }
 }
