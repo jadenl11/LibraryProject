@@ -23,11 +23,15 @@ public class Library
     List<Patron> patronList;
     List<LibraryItem> itemList;
     private int day;
+    private int commandCount;
+    private int errorCount;
     
     public Library(){
         List<Patron> patronList = new ArrayList<Patron>();
         List<LibraryItem> itemList = new ArrayList<LibraryItem>();
         day = 1;
+        commandCount = 0;
+        errorCount = 0;
     }
     // TODO: what does the Library need to remember? (Fields must be private.)
 
@@ -100,34 +104,38 @@ public class Library
 
     private String addPatron(String id, String name) throws LibraryException
     {
-        // TODO
-            patronList.add(new Patron(id, name));
-        throw new LibraryException("PATRON is not written yet.");
+        commandCount++;
+        patronList.add(new Patron(id, name));
+        return "Added patron " + id + " (" + name + ").";
     }
 
     /** type is "BOOK", "DVD", or "MAGAZINE". */
     private String addItem(String type, String id, String title) throws LibraryException
     {
-        // TODO (this is the one place Library may look at the type to create the right item)
-        if(type.equals("Book"))
+        commandCount++;
+        if(type.equals("BOOK"))
             itemList.add(new Book(id, title));
-        else if(type.equals("Dvd"))
+        else if(type.equals("DVD"))
             itemList.add(new Dvd(id, title));
-        else if(type.equals("Magazine"))
+        else if(type.equals("MAGAZINE"))
             itemList.add(new Dvd(id, title));
-        return "Successfully added " + type + " " + title + " " + id;
+        return "Added " + type + " " + id + " \"" + title + "\"";
     }
 
     private String checkOut(String patronId, String itemId) throws LibraryException
     {
+        commandCount++;
         Patron patron = findPatron(patronId);
         LibraryItem item = findItem(itemId);
         item.setAvailable(false);
+        int dueDay = day + item.getLoanLength();
         patron.checkOut(item);
+        return patron.getName() + " checked out" + "\"" + item.getName() + "\" (" + itemId + ", " + "due day" + dueDay ".";
     }
 
     private String returnItem(String itemId) throws LibraryException
     {
+        commandCount++;
         Patron patron = findPatron(patronId);
         LibraryItem item = findItem(itemId);
         patron.returnItem(item);
@@ -141,25 +149,27 @@ public class Library
     /** days arrives as text. It might not be a number. */
     private String advance(String days) throws LibraryException
     {
+        commandCount++;
         day += Integer.parseInt(days);
     }
 
     /** cents arrives as text. It might not be a number. */
     private String pay(String patronId, String cents) throws LibraryException
     {
-                return patron.getName() + " has payed " + cents + " cents";
+        commandCount++;
+        return patron.getName() + " has payed " + cents + " cents";
     }
 
     private String status(String patronId) throws LibraryException
     {
+        commandCount++;
         Patron patron = findPatron(patronId);
-        return patron.getName() + " (" + patron.getId() + "): owes" + " $" + patron.getLateFee() + ", " + patron.itemCount() + " items";
+        return patron.getName() + " (" + patron.getId() + "): owes" + " $" + patron.getLateFee() + ", " + patron.itemCount() + " item(s) checked out";    
     }
 
     private String report() throws LibraryException
     {
-        // TODO
-        throw new LibraryException("REPORT is not written yet.");
+        return "Processed " + commandCount + " commands (" + errorCount + ")";
     }
 
     private Patron findPatron(String patronId){
@@ -167,11 +177,13 @@ public class Library
             if(patron.getId().equals(patronId))
                 return patron;
         }
+        throw new LibraryException("Patron doesn't exist");
     }
     private LibraryItem findItem(String itemId){
         for(LibraryItem item : itemList){
             if(item.getId().equals(itemId))
                 return item;
         }
+        throw new LibraryException("Item doesn't exist");
     }
 }
