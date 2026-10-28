@@ -101,7 +101,7 @@ public class Library
     private String addPatron(String id, String name) throws LibraryException
     {
             patronList.add(new Patron(id, name));
-            return "Added patron " + id + " (" + name + ")"
+            return "Added patron " + id + " (" + name + ")";
     }
 
     /** type is "BOOK", "DVD", or "MAGAZINE". */

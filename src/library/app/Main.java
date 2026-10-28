@@ -9,13 +9,16 @@ import java.util.Scanner;
  */
 public class Main
 {
+
     public static void main(String[] args)
     {
         Scanner scanner = new Scanner("01_basic.txt");
 
         while(scanner.hasNext()){
+            Library library = new Library();
+            
             String line = scanner.nextLine();
-            Library.execute(line);
+            library.execute(line);
         }
     }
 }
