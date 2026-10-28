@@ -6,12 +6,19 @@ package library.app;
  */
 public class Patron
 {
-    private ArrayList<E> itemList;
+    private ArrayList<LibraryItem> itemList;
     private String name;
     private double balance;
     private double owe;
 
     public Patron(){
+        balance = 0;
+        itemlist = new ArrayList<LibraryItem>();
+    }
+
+    public Patron(String myName, int cents){
+        name = myName;
+        balance = cents;
         itemlist = new ArrayList<LibraryItem>();
     }
 
@@ -25,4 +32,6 @@ public class Patron
         balance -= item.getLateFee();
         itemList.remove(item);
     }
+
+    
 }
