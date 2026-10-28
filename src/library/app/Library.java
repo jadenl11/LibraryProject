@@ -19,7 +19,11 @@ import library.model.LibraryItem;
  * text to print, or throws an exception when a rule is broken.
  */
 public class Library
+<<<<<<< HEAD
 {
+=======
+{ hello
+>>>>>>> parent of d90033f (Merge branch 'main' of https://github.com/jadenl11/LibraryProject)
     List<Patron> patronList = new ArrayList<Patron>();
     List<LibraryItem> itemList = new ArrayList<LibraryItem>();
     // TODO: what does the Library need to remember? (Fields must be private.)
