@@ -9,17 +9,15 @@ public class Patron
     private ArrayList<LibraryItem> itemList;
     private String name;
     private String id;
-    private double balance;
-    private double owe;
+    private int balance;
 
     public Patron(){
-        balance = 0;
         itemList = new ArrayList<LibraryItem>();
     }
 
-    public Patron(String myName, int cents){
+    public Patron(String myName, String myId){
         name = myName;
-        balance = cents;
+        id = myId;
         itemList = new ArrayList<LibraryItem>();
     }
 
@@ -35,6 +33,10 @@ public class Patron
         return balance;
     }
 
+    public void pay(int cents){
+        balance -= cents;
+    }
+
     public void checkOut(LibraryItem item, int dayI){
         if(itemList.size() < 3){
             itemList.add(item);
@@ -44,6 +46,5 @@ public class Patron
     public void returnItem(LibraryItem item){
         itemList.remove(item);
     }
-
-    
+ 
 }
