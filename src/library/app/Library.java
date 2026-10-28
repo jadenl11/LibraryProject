@@ -1,6 +1,12 @@
 package library.app;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import library.items.Book;
+import library.items.Dvd;
 import library.model.LibraryException;
+import library.model.LibraryItem;
 
 /**
  * The library itself. It carries out one command at a time.
@@ -14,6 +20,8 @@ import library.model.LibraryException;
  */
 public class Library
 {
+    List<Patron> patronList = new ArrayList<Patron>();
+    List<LibraryItem> itemList = new ArrayList<LibraryItem>();
     // TODO: what does the Library need to remember? (Fields must be private.)
 
     /* ================= PROVIDED: command reading ================= */
@@ -86,6 +94,7 @@ public class Library
     private String addPatron(String id, String name) throws LibraryException
     {
         // TODO
+            patronList.add(new Patron(id, name));
         throw new LibraryException("PATRON is not written yet.");
     }
 
@@ -93,11 +102,18 @@ public class Library
     private String addItem(String type, String id, String title) throws LibraryException
     {
         // TODO (this is the one place Library may look at the type to create the right item)
+        if(type.equals("Book"))
+            itemList.add(new Book(id, title));
+        else if(type.equals("Dvd"))
+            itemList.add(new Dvd(id, title));
+        else if(type.equals("Magazine"))
+            itemList.add(new Dvd(id, title));
         throw new LibraryException(type + " is not written yet.");
     }
 
     private String checkOut(String patronId, String itemId) throws LibraryException
     {
+        //confused
         // TODO
         throw new LibraryException("CHECKOUT is not written yet.");
     }
@@ -112,6 +128,9 @@ public class Library
     private String advance(String days) throws LibraryException
     {
         // TODO
+        for(Patron patron : patronList){
+            patron.dayCount(days);
+        }
         throw new LibraryException("ADVANCE is not written yet.");
     }
 
@@ -119,6 +138,7 @@ public class Library
     private String pay(String patronId, String cents) throws LibraryException
     {
         // TODO
+        
         throw new LibraryException("PAY is not written yet.");
     }
 
