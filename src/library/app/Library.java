@@ -23,11 +23,15 @@ public class Library
     List<Patron> patronList;
     List<LibraryItem> itemList;
     private int day;
+    private int commandCount;
+    private int errorCount;
 
     public Library(){
         List<Patron> patronList = new ArrayList<Patron>();
         List<LibraryItem> itemList = new ArrayList<LibraryItem>();
         day = 1;
+        commandCount = 0;
+        errorCount = 0;
     }
     // TODO: what does the Library need to remember? (Fields must be private.)
 
@@ -100,6 +104,7 @@ public class Library
 
     private String addPatron(String id, String name) throws LibraryException
     {
+            commandCount++;
             patronList.add(new Patron(id, name));
             return "Added patron " + id + " (" + name + ")";
     }
@@ -107,7 +112,7 @@ public class Library
     /** type is "BOOK", "DVD", or "MAGAZINE". */
     private String addItem(String type, String id, String title) throws LibraryException
     {
-        // TODO (this is the one place Library may look at the type to create the right item)
+        commandCount++;
         if(type.equals("Book"))
             itemList.add(new Book(id, title));
         else if(type.equals("Dvd"))
@@ -119,6 +124,7 @@ public class Library
 
     private String checkOut(String patronId, String itemId) throws LibraryException
     {
+        commandCount++;
         Patron patron = findPatron(patronId);
         LibraryItem item = findItem(itemId);
         patron.checkOut(item);
@@ -129,6 +135,7 @@ public class Library
 
     private String returnItem(String patronId, String itemId) throws LibraryException
     {
+        commandCount++;
         LibraryItem item = findItem(itemId);
         item.setAvailable(true);
         pay(patronId, cents);
@@ -138,6 +145,7 @@ public class Library
     /** days arrives as text. It might not be a number. */
     private String advance(String days) throws LibraryException
     {
+        commandCount++;
         day += Integer.parseInt(days);
         return "Advanced " + days + " days";
     }
@@ -145,25 +153,22 @@ public class Library
     /** cents arrives as text. It might not be a number. */
     private String pay(String patronId, String cents) throws LibraryException
     {
+        commandCount++;
         Patron patron = findPatron(patronId);
         patron.pay(Integer.parseInt(cents));
     }
 
     private String status(String patronId) throws LibraryException
     {
-        for(Patron patron : patronList){
-            if(patron.getId().equals(patronId)){
-                patron.pay(cents);
-                return patron.getName() + " has payed " + cents;
-            }
-        }
-        throw new LibraryException("STATUS is not written yet.");
+        commandCount++;
+        Patron patron = findPatron();
+        return patron.getName() + "(" + patron.getId() + "):" + "owes " + Money.format(patron.getOwed()) + " " + patron.getNumItems() + "item(s) checked out"; 
     }
 
     private String report() throws LibraryException
     {
         // TODO
-        throw new LibraryException("REPORT is not written yet.");
+        return "Processed " + commandCount  + " commands (" + errorCount + " errors)."; 
     }
 
     private Patron findPatron(String patronId) throws LibraryException{
