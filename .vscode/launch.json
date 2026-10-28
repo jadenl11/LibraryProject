@@ -1,0 +1,25 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Run one script (edit args)",
+      "request": "launch",
+      "mainClass": "library.app.Main",
+      "args": ["tests/01_basic.txt"]
+    },
+    {
+      "type": "java",
+      "name": "Grader",
+      "request": "launch",
+      "mainClass": "library.grader.Grader"
+    },
+    {
+      "type": "java",
+      "name": "Grader: one test (edit args)",
+      "request": "launch",
+      "mainClass": "library.grader.Grader",
+      "args": ["01_basic"]
+    }
+  ]
+}

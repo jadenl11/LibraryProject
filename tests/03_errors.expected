@@ -1,0 +1,33 @@
+Added patron P1 (Ana).
+Error: patron P1 already exists.
+Added BOOK B001 "Dune".
+Error: item B001 already exists.
+Added DVD D001 "Alien".
+Added MAGAZINE M001 "Wired".
+Added BOOK B002 "Persuasion".
+Error: no such patron P9.
+Error: no such item X9.
+Ana checked out "Dune" (B001), due day 22.
+Error: "Dune" (B001) is already checked out.
+Error: no such item X9.
+Error: "Alien" (D001) is not checked out.
+Ana checked out "Alien" (D001), due day 8.
+Ana checked out "Wired" (M001), due day 15.
+Error: Ana already has 3 items checked out.
+Error: days must be a positive whole number.
+Error: days must be a positive whole number.
+Error: wrong number of arguments for ADVANCE.
+Error: Ana only owes $0.00.
+Error: amount must be a positive whole number of cents.
+Error: amount must be a positive whole number of cents.
+Error: no such patron P9.
+Error: no such patron P9.
+Error: wrong number of arguments for CHECKOUT.
+Error: wrong number of arguments for BOOK.
+Error: unknown command checkout.
+Error: unknown command FOO.
+Ana (P1): owes $0.00, 3 item(s) checked out
+  B001 "Dune" due day 22
+  D001 "Alien" due day 8
+  M001 "Wired" due day 15
+Processed 29 commands (20 errors).

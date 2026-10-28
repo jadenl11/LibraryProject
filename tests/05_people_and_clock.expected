@@ -1,0 +1,19 @@
+Added patron P1 (Ana).
+Error: patron P1 already exists.
+Added patron P2 (Ben).
+Advanced 5 day(s). Today is day 6.
+Error: days must be a positive whole number.
+Error: days must be a positive whole number.
+Error: wrong number of arguments for ADVANCE.
+Ana (P1): owes $0.00, 0 item(s) checked out
+Error: no such patron P9.
+Error: Ana only owes $0.00.
+Error: amount must be a positive whole number of cents.
+Error: no such patron P9.
+Error: wrong number of arguments for CHECKOUT.
+Error: no such patron P9.
+Error: no such item B001.
+Error: no such item B001.
+Error: unknown command FOO.
+Total fees owed: $0.00
+Processed 18 commands (13 errors).

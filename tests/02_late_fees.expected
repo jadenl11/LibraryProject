@@ -1,0 +1,29 @@
+Added patron P1 (Ana).
+Added BOOK B001 "Dune".
+Added DVD D001 "Alien".
+Added MAGAZINE M001 "Wired".
+Ana checked out "Dune" (B001), due day 22.
+Ana checked out "Alien" (D001), due day 8.
+Ana checked out "Wired" (M001), due day 15.
+Ana (P1): owes $0.00, 3 item(s) checked out
+  B001 "Dune" due day 22
+  D001 "Alien" due day 8
+  M001 "Wired" due day 15
+Advanced 24 day(s). Today is day 25.
+Ana (P1): owes $0.00, 3 item(s) checked out
+  B001 "Dune" due day 22 (OVERDUE)
+  D001 "Alien" due day 8 (OVERDUE)
+  M001 "Wired" due day 15 (OVERDUE)
+Ana returned "Dune" (B001), 3 day(s) late. Fee: $0.75.
+Ana returned "Alien" (D001), 17 day(s) late. Fee: $10.00.
+Ana returned "Wired" (M001), 10 day(s) late. Fee: $0.00.
+Ana (P1): owes $10.75, 0 item(s) checked out
+Error: Ana owes $10.75 and cannot check out items.
+Ana paid $5.00. Balance: $5.75.
+Ana paid $1.00. Balance: $4.75.
+Ana checked out "Dune" (B001), due day 46.
+B001 BOOK "Dune" - checked out by P1, due day 46
+D001 DVD "Alien" - available
+M001 MAGAZINE "Wired" - available
+Total fees owed: $4.75
+Processed 19 commands (1 errors).

@@ -1,0 +1,19 @@
+Added patron P1 (Ana).
+Added patron P2 (Ben).
+Added BOOK B001 "Dune".
+Added DVD D001 "Alien".
+Added MAGAZINE M001 "Wired Magazine".
+Ana checked out "Dune" (B001), due day 22.
+Ben checked out "Alien" (D001), due day 8.
+Ana (P1): owes $0.00, 1 item(s) checked out
+  B001 "Dune" due day 22
+Advanced 5 day(s). Today is day 6.
+Ana returned "Dune" (B001) on time.
+Ana (P1): owes $0.00, 0 item(s) checked out
+Ben (P2): owes $0.00, 1 item(s) checked out
+  D001 "Alien" due day 8
+B001 BOOK "Dune" - available
+D001 DVD "Alien" - checked out by P2, due day 8
+M001 MAGAZINE "Wired Magazine" - available
+Total fees owed: $0.00
+Processed 13 commands (0 errors).
