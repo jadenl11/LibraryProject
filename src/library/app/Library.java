@@ -113,14 +113,26 @@ public class Library
 
     private String checkOut(String patronId, String itemId) throws LibraryException
     {
-        //confused
+        for(Patron patron : patronList){
+            if(patron.getId().equals(patronId)){
+                for(LibraryItem item : itemList){
+                    if(item.getId().equals(itemId)){
+                        item.setAvailable(false);
+                        patron.checkOut(itemId);
+                    }
+                }
+            }
+        }
         // TODO
         throw new LibraryException("CHECKOUT is not written yet.");
     }
 
     private String returnItem(String itemId) throws LibraryException
     {
-        // TODO
+        for(LibratyItem item : itemList){
+            if(item.getId().equals(itemId))
+                item.setAvailable(true);
+        }
         throw new LibraryException("RETURN is not written yet.");
     }
 
@@ -137,14 +149,23 @@ public class Library
     /** cents arrives as text. It might not be a number. */
     private String pay(String patronId, String cents) throws LibraryException
     {
-        // TODO
-        
+        for(Patron patron : patronList){
+            if(patron.getId().equals(patronId)){
+                patron.pay(cents);
+                return patron.getName() + " has payed " + cents;
+            }
+        }
         throw new LibraryException("PAY is not written yet.");
     }
 
     private String status(String patronId) throws LibraryException
     {
-        // TODO
+        for(Patron patron : patronList){
+            if(patron.getId().equals(patronId)){
+                patron.pay(cents);
+                return patron.getName() + " has payed " + cents;
+            }
+        }
         throw new LibraryException("STATUS is not written yet.");
     }
 
