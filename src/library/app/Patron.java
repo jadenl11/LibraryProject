@@ -6,5 +6,23 @@ package library.app;
  */
 public class Patron
 {
-    // TODO
+    private ArrayList<E> itemList;
+    private String name;
+    private double balance;
+    private double owe;
+
+    public Patron(){
+        itemlist = new ArrayList<LibraryItem>();
+    }
+
+    public void addItem(LibraryItem item){
+        if(itemList.size() < 3){
+            itemList.add(item);
+        }
+    }
+
+    public void returnItem(LibraryItem item){
+        balance -= item.getLateFee();
+        itemList.remove(item);
+    }
 }
