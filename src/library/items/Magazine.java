@@ -2,8 +2,29 @@ package library.items;
 
 import library.model.LibraryItem;
 
-/** TODO: only what is different about a Magazine. */
+/** A magazine has a 14-day loan and no late fee. */
 public class Magazine extends LibraryItem
 {
-    // TODO: Ian Han~
+    public Magazine(String id, String title)
+    {
+        super(id, title);
+    }
+
+    @Override
+    protected int getLoanLength()
+    {
+        return 14;
+    }
+
+    @Override
+    protected int getLateFeePerDay()
+    {
+        return 0;
+    }
+
+    @Override
+    protected int getMaxLateFee()
+    {
+        return 0;
+    }
 }
