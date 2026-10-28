@@ -79,7 +79,7 @@ public abstract class LibraryItem
     public int getLateFee(int today)
     {
         int lateDays = getDaysLate(today);
-        if (lateDays == 0)
+        if (lateDays <= 0)
             return 0;
 
         int fee = lateDays * getLateFeePerDay();
