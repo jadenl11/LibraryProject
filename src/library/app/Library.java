@@ -174,4 +174,17 @@ public class Library
         // TODO
         throw new LibraryException("REPORT is not written yet.");
     }
+
+    private Patron findPatron(String patronId){
+        for(Patron patron : patronList){
+            if(patron.getId().equals(patronId))
+                return patron;
+        }
+    }
+    private LibraryItem findItem(String itemId){
+        for(LibraryItem item : itemList){
+            if(item.getId().equals(itemId))
+                return item;
+        }
+    }
 }
