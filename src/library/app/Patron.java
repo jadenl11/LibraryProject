@@ -1,21 +1,26 @@
 package library.app;
 
+import java.util.ArrayList;
+
+import library.model.LibraryItem;
+
 public class Patron
 {
     private ArrayList<LibraryItem> itemList;
     private String name;
+    private String id;
     private double balance;
     private double owe;
 
     public Patron(){
         balance = 0;
-        itemlist = new ArrayList<LibraryItem>();
+        itemList = new ArrayList<LibraryItem>();
     }
 
     public Patron(String myName, int cents){
         name = myName;
         balance = cents;
-        itemlist = new ArrayList<LibraryItem>();
+        itemList = new ArrayList<LibraryItem>();
     }
 
     public String getId(){
@@ -37,7 +42,6 @@ public class Patron
     }
 
     public void returnItem(LibraryItem item){
-        balance -= item.getLateFee();
         itemList.remove(item);
     }
 
