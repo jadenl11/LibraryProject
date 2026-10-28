@@ -1,9 +1,5 @@
 package library.app;
 
-/**
- * TODO (Partner B): a person who borrows items. You decide what a Patron
- * knows and what it can do. (You may also change or delete this file.)
- */
 public class Patron
 {
     private ArrayList<LibraryItem> itemList;
@@ -22,7 +18,19 @@ public class Patron
         itemlist = new ArrayList<LibraryItem>();
     }
 
-    public void addItem(LibraryItem item){
+    public String getId(){
+        return id;
+    }
+
+    public String getName(){
+        return name;
+    }
+
+    public int getBalance(){
+        return balance;
+    }
+
+    public void checkOut(LibraryItem item, int dayI){
         if(itemList.size() < 3){
             itemList.add(item);
         }
