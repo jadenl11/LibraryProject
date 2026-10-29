@@ -7,6 +7,7 @@ import library.items.Book;
 import library.items.Dvd;
 import library.model.LibraryException;
 import library.model.LibraryItem;
+import library.model.Money;
 
 /**
  * The library itself. It carries out one command at a time.
@@ -127,19 +128,18 @@ public class Library
         commandCount++;
         Patron patron = findPatron(patronId);
         LibraryItem item = findItem(itemId);
-        patron.checkOut(item);
-        item.setAvailable(false);
-        item.checkOut(day);
-        return patron.getName() + " checked out " + "\"" + item.getName() + "\" (" + id + ")" + ", due day " + item.getDueDay() + ".";
+        patron.checkOut(item, day);
+        item.setIsCheckedOut(false);
+        item.setIsCheckedOutBy(patronId);
+        return patron.getName() + " checked out " + "\"" + item.getTitle() + "\" (" + itemId + ")" + ", due day " + item.getDueDay() + ".";
     }
 
-    private String returnItem(String patronId, String itemId) throws LibraryException
+    private String returnItem(String itemId) throws LibraryException
     {
         commandCount++;
         LibraryItem item = findItem(itemId);
-        item.setAvailable(true);
-        pay(patronId, cents);
-        return "returned \"" + item.getName() + "\""; 
+        item.setIsCheckedOut(true);
+        return "returned \"" + item.getTitle() + "\""; 
     }
 
     /** days arrives as text. It might not be a number. */
@@ -156,12 +156,13 @@ public class Library
         commandCount++;
         Patron patron = findPatron(patronId);
         patron.pay(Integer.parseInt(cents));
+        return patron.getName() + " paid" + Money.format(Integer.parseInt(cents)) + ". Balance: $" + patron.getBalance();
     }
 
     private String status(String patronId) throws LibraryException
     {
         commandCount++;
-        Patron patron = findPatron();
+        Patron patron = findPatron(patronId);
         return patron.getName() + "(" + patron.getId() + "):" + "owes " + Money.format(patron.getOwed()) + " " + patron.getNumItems() + "item(s) checked out"; 
     }
 
