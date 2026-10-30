@@ -14,9 +14,9 @@ public abstract class LibraryItem
     {
         this.id = id;
         this.title = title;
-        this.checkedOut = false;
-        this.checkedOutBy = null;
-        this.dueDay = 0;
+        checkedOut = false;
+        checkedOutBy = null;
+        dueDay = 0;
         isAvailable = true;
     }
 
