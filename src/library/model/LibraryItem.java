@@ -8,6 +8,7 @@ public abstract class LibraryItem
     private boolean checkedOut;
     private String checkedOutBy;
     private int dueDay;
+    private boolean isAvailable;    
 
     protected LibraryItem(String id, String title)
     {
@@ -16,6 +17,7 @@ public abstract class LibraryItem
         this.checkedOut = false;
         this.checkedOutBy = null;
         this.dueDay = 0;
+        isAvailable = true;
     }
 
     public void setCheckedDate(int dayCheckedOut){
@@ -95,5 +97,13 @@ public abstract class LibraryItem
         if (maxFee > 0)
             return Math.min(fee, maxFee);
         return fee;
+    }
+
+    public void setAvailable(boolean available){
+        isAvailable = available;
+    }
+
+    public boolean getAvailable(){
+        return isAvailable;
     }
 }
