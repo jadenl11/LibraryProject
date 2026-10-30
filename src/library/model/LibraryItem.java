@@ -9,7 +9,6 @@ public abstract class LibraryItem
     private String checkedOutBy;
     private int dueDay;
 
-
     protected LibraryItem(String id, String title)
     {
         this.id = id;
@@ -44,9 +43,18 @@ public abstract class LibraryItem
         return checkedOut;
     }
 
+    public void setIsCheckedOut(boolean checked){
+        checkedOut = checked;
+    }
+
     public String getCheckedOutBy()
     {
         return checkedOutBy;
+    }
+
+    public void setIsCheckedOutBy(String patronId)
+    {
+        checkedOutBy = patronId;
     }
 
     public int getDueDay()
