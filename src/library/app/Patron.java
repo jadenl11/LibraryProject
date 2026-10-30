@@ -46,4 +46,12 @@ public class Patron
     public void returnItem(LibraryItem item){
         itemList.remove(item);
     } 
+
+    public int getOwed(){
+        return 1;
+    }
+
+    public int getNumItems(){
+        return 2;
+    }
 }

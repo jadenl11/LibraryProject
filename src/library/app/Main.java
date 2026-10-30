@@ -1,6 +1,9 @@
 package library.app;
 
 import java.util.Scanner;
+import java.io.*;
+
+import library.model.LibraryException;
 
 /**
  * TODO: read the script file named in args[0], run each command,
@@ -10,15 +13,19 @@ import java.util.Scanner;
 public class Main
 {
 
-    public static void main(String[] args)
+    public static void main(String[] args) throws FileNotFoundException
     {
-        Scanner scanner = new Scanner("01_basic.txt");
+        Scanner scanner = new Scanner(new File("01_basic.txt"));
 
         while(scanner.hasNext()){
             Library library = new Library();
             
             String line = scanner.nextLine();
-            library.execute(line);
+            try {
+                library.execute(line);
+            } catch (LibraryException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

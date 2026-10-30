@@ -106,7 +106,6 @@ public class Library
     private String addPatron(String id, String name) throws LibraryException
     {
             commandCount++;
-            System.out.println("hi");
             patronList.add(new Patron(id, name));
             return "Added patron " + id + " (" + name + ")";
     }
