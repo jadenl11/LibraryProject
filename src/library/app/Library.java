@@ -21,15 +21,15 @@ import library.model.Money;
  */
 public class Library
 {
-    List<Patron> patronList;
-    List<LibraryItem> itemList;
+    private List<Patron> patronList;
+    private List<LibraryItem> itemList;
     private int day;
     private int commandCount;
     private int errorCount;
 
     public Library(){
-        List<Patron> patronList = new ArrayList<Patron>();
-        List<LibraryItem> itemList = new ArrayList<LibraryItem>();
+        patronList = new ArrayList<Patron>();
+        itemList = new ArrayList<LibraryItem>();
         day = 1;
         commandCount = 0;
         errorCount = 0;
@@ -106,6 +106,7 @@ public class Library
     private String addPatron(String id, String name) throws LibraryException
     {
             commandCount++;
+            System.out.println("hi");
             patronList.add(new Patron(id, name));
             return "Added patron " + id + " (" + name + ")";
     }
