@@ -15,7 +15,8 @@ public class Main
 
     public static void main(String[] args) throws FileNotFoundException
     {
-        Scanner scanner = new Scanner(new File("01_basic.txt"));
+        File file = new File("01_basic.txt");
+        Scanner scanner = new Scanner(file);
 
         while(scanner.hasNext()){
             Library library = new Library();
