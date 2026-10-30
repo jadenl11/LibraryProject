@@ -5,6 +5,7 @@ import java.util.List;
 
 import library.items.Book;
 import library.items.Dvd;
+import library.items.Magazine;
 import library.model.LibraryException;
 import library.model.LibraryItem;
 import library.model.Money;
@@ -107,20 +108,20 @@ public class Library
     {
             commandCount++;
             patronList.add(new Patron(id, name));
-            return "Added patron " + id + " (" + name + ")";
+            return "Added patron " + id + " (" + name + ").";
     }
 
     /** type is "BOOK", "DVD", or "MAGAZINE". */
     private String addItem(String type, String id, String title) throws LibraryException
     {
         commandCount++;
-        if(type.equals("Book"))
+        if(type.equals("BOOK"))
             itemList.add(new Book(id, title));
-        else if(type.equals("Dvd"))
+        else if(type.equals("DVD"))
             itemList.add(new Dvd(id, title));
-        else if(type.equals("Magazine"))
-            itemList.add(new Dvd(id, title));
-        return "Added " + type + " " + id + " \"" + title + "\"";
+        else if(type.equals("MAGAZINE"))
+            itemList.add(new Magazine(id, title));
+        return "Added " + type + " " + id + " \"" + title + "\".";
     }
 
     private String checkOut(String patronId, String itemId) throws LibraryException
@@ -129,8 +130,8 @@ public class Library
         Patron patron = findPatron(patronId);
         LibraryItem item = findItem(itemId);
         patron.checkOut(item, day);
-        item.setIsCheckedOut(false);
-        item.setIsCheckedOutBy(patronId);
+        item.setIsCheckedOut(true);
+        item.setIsCheckedOutBy(patronId, day);
         return patron.getName() + " checked out " + "\"" + item.getTitle() + "\" (" + itemId + ")" + ", due day " + item.getDueDay() + ".";
     }
 
@@ -163,7 +164,7 @@ public class Library
     {
         commandCount++;
         Patron patron = findPatron(patronId);
-        return patron.getName() + "(" + patron.getId() + "):" + "owes " + Money.format(patron.getBalance()) + " " + patron.getNumItems() + "item(s) checked out"; 
+        return patron.getName() + " (" + patron.getId() + "):" + " owes " + Money.format(patron.getBalance()) + ", " + patron.getNumItems() + " item(s) checked out"; 
     }
 
     private String report() throws LibraryException

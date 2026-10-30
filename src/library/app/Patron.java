@@ -15,7 +15,7 @@ public class Patron
         itemList = new ArrayList<LibraryItem>();
     }
 
-    public Patron(String myName, String myId){
+    public Patron(String myId, String myName){
         name = myName;
         id = myId;
         itemList = new ArrayList<LibraryItem>();

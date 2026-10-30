@@ -8,7 +8,7 @@ public abstract class LibraryItem
     private boolean checkedOut;
     private String checkedOutBy;
     private int dueDay;
-    private boolean isAvailable;    
+    private boolean isAvailable;   
 
     protected LibraryItem(String id, String title)
     {
@@ -54,8 +54,9 @@ public abstract class LibraryItem
         return checkedOutBy;
     }
 
-    public void setIsCheckedOutBy(String patronId)
+    public void setIsCheckedOutBy(String patronId, int day)
     {
+        dueDay = day + getLoanLength();
         checkedOutBy = patronId;
     }
 

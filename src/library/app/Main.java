@@ -16,13 +16,13 @@ public class Main
     public static void main(String[] args) throws FileNotFoundException
     {
         Scanner scanner = new Scanner(new File("tests/01_basic.txt"));
-
+        Library library = new Library();
         while(scanner.hasNext()){
-            Library library = new Library();
             
             String line = scanner.nextLine();
             try {
-                library.execute(line);
+                String output = library.execute(line);
+                System.out.println(output);
             } catch (LibraryException e) {
                 e.printStackTrace();
             }
