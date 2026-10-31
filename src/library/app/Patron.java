@@ -55,9 +55,16 @@ public class Patron
         String status = "";
 
         for(LibraryItem item: itemList){
-            status += "\n" + item.getId() + " \"" + item.getTitle() + "\" due day " + item.getDueDay();
+            status += "\n  " + item.getId() + " \"" + item.getTitle() + "\" due day " + item.getDueDay();
         }
 
         return status;
+    }
+
+    public boolean ifBook(String bookId){
+        for(LibraryItem item: itemList){
+            if(item.getId().equals(bookId)) return true;
+        }
+        return false;
     }
 }

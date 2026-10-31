@@ -139,8 +139,13 @@ public class Library
     {
         commandCount++;
         LibraryItem item = findItem(itemId);
+        Patron patron = findPatron(item.getCheckedOutBy());
+        patron.returnItem(findItem(itemId));
         item.setIsCheckedOut(true);
-        return "returned \"" + item.getTitle() + "\""; 
+
+        String late = (item.getDaysLate(day) == 0) ? "on time" : ", " + item.getDaysLate(day) + "day(s) late";
+
+        return patron.getName() + " returned \"" + item.getTitle() + "\" (" + itemId + ") " + late + "."; 
     }
 
     /** days arrives as text. It might not be a number. */
@@ -148,7 +153,7 @@ public class Library
     {
         commandCount++;
         day += Integer.parseInt(days);
-        return "Advanced " + days + " days";
+        return "Advanced " + days + " day(s). Today is day " + day + ".";
     }
 
     /** cents arrives as text. It might not be a number. */

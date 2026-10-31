@@ -79,8 +79,8 @@ public abstract class LibraryItem
             return 0;
 
         int lateDays = today - dueDay;
-        if(lateDays<0){
-            return lateDays*-1;
+        if(lateDays > 0){
+            return lateDays;
         }
         else{
             return 0;
