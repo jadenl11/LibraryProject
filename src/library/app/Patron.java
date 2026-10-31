@@ -50,4 +50,14 @@ public class Patron
     public int getNumItems(){
         return itemList.size();
     }
+
+    public String getItemStatus(){
+        String status = "";
+
+        for(LibraryItem item: itemList){
+            status += "\n" + item.getId() + " \"" + item.getTitle() + "\" due day " + item.getDueDay();
+        }
+
+        return status;
+    }
 }

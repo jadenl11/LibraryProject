@@ -17,19 +17,21 @@ public class Main
     public static void main(String[] args) throws FileNotFoundException
     {
         ArrayList<File> filelist = new ArrayList<File>();
-        filelist.add(new File("01_basic.txt"));
-        filelist.add(new File("02_late_fees.txt"));
-        filelist.add(new File("03_errors.txt"));
-        filelist.add(new File("04_report.txt"));
-        filelist.add(new File("05_people_and_clock.txt"));
+        filelist.add(new File("tests/01_basic.txt"));
+        filelist.add(new File("tests/02_late_fees.txt"));
+        filelist.add(new File("tests/03_errors.txt"));
+        filelist.add(new File("tests/04_report.txt"));
+        filelist.add(new File("tests/05_people_and_clock.txt"));
         filelist.add(new File("tests/does_not_exist.txt"));
 
-        for(File file: filelist) {
+        //for(File file: filelist) {
             try{
-                Scanner scanner = new Scanner(file);
+                Scanner scanner = new Scanner(new File("tests/01_basic.txt"));
                 Library library = new Library();
                 while(scanner.hasNext()){
                     String line = scanner.nextLine();
+                    if(line.charAt(0) == '#') line = scanner.nextLine();
+
                     try {
                         String output = library.execute(line);
                         System.out.println(output);
@@ -44,6 +46,6 @@ public class Main
             }
             finally{
             }
-        }
+        //}
     }
 }

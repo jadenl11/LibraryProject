@@ -164,7 +164,8 @@ public class Library
     {
         commandCount++;
         Patron patron = findPatron(patronId);
-        return patron.getName() + " (" + patron.getId() + "):" + " owes " + Money.format(patron.getBalance()) + ", " + patron.getNumItems() + " item(s) checked out"; 
+        return patron.getName() + " (" + patron.getId() + "):" + " owes " + Money.format(patron.getBalance()) + ", " 
+            + patron.getNumItems() + " item(s) checked out" + patron.getItemStatus(); 
     }
 
     private String report() throws LibraryException
