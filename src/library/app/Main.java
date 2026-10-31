@@ -1,5 +1,6 @@
 package library.app;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.*;
 
@@ -15,16 +16,33 @@ public class Main
 
     public static void main(String[] args) throws FileNotFoundException
     {
-        Scanner scanner = new Scanner(new File("tests/01_basic.txt"));
-        Library library = new Library();
-        while(scanner.hasNext()){
-            
-            String line = scanner.nextLine();
-            try {
-                String output = library.execute(line);
-                System.out.println(output);
-            } catch (LibraryException e) {
-                e.printStackTrace();
+        ArrayList<File> filelist = new ArrayList<File>();
+        filelist.add(new File("01_basic.txt"));
+        filelist.add(new File("02_late_fees.txt"));
+        filelist.add(new File("03_errors.txt"));
+        filelist.add(new File("04_report.txt"));
+        filelist.add(new File("05_people_and_clock.txt"));
+        filelist.add(new File("tests/does_not_exist.txt"));
+
+        for(File file: filelist) {
+            try{
+                Scanner scanner = new Scanner(file);
+                Library library = new Library();
+                while(scanner.hasNext()){
+                    String line = scanner.nextLine();
+                    try {
+                        String output = library.execute(line);
+                        System.out.println(output);
+                    } 
+                    catch (LibraryException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            catch(FileNotFoundException e){
+                System.out.println("Error: could not open script file tests/does_not_exist.txt.");
+            }
+            finally{
             }
         }
     }
