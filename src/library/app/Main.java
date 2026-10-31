@@ -26,7 +26,7 @@ public class Main
 
         //for(File file: filelist) {
             try{
-                Scanner scanner = new Scanner(new File("tests/01_basic.txt"));
+                Scanner scanner = new Scanner(new File("tests/does_not_exist.txt"));
                 Library library = new Library();
                 while(scanner.hasNext()){
                     String line = scanner.nextLine();
