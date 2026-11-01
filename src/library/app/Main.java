@@ -26,7 +26,7 @@ public class Main
 
         //for(File file: filelist) {
             try{
-                Scanner scanner = new Scanner(new File("tests/does_not_exist.txt"));
+                Scanner scanner = new Scanner(new File("tests/05_people_and_clock.txt"));
                 Library library = new Library();
                 while(scanner.hasNext()){
                     String line = scanner.nextLine();
@@ -37,7 +37,7 @@ public class Main
                         System.out.println(output);
                     } 
                     catch (LibraryException e) {
-                        e.printStackTrace();
+                        System.out.println("Error: " + e.getMessage());
                     }
                 }
             }

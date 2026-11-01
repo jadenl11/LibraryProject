@@ -27,4 +27,8 @@ public class Book extends LibraryItem
     {
         return 0;
     }
+
+    public String getType(){
+        return "BOOK";
+    }
 }
