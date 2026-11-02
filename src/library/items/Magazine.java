@@ -27,8 +27,4 @@ public class Magazine extends LibraryItem
     {
         return 0;
     }
-
-    public String getType(){
-        return "MAGAZINE";
-    }
 }

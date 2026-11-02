@@ -51,11 +51,13 @@ public class Patron
         return itemList.size();
     }
 
-    public String getItemStatus(){
+    public String getItemStatus(int day){
         String status = "";
 
         for(LibraryItem item: itemList){
             status += "\n  " + item.getId() + " \"" + item.getTitle() + "\" due day " + item.getDueDay();
+            if(item.getDaysLate(day) != 0)
+                status += " (OVERDUE)";
         }
 
         return status;
@@ -66,5 +68,13 @@ public class Patron
             if(item.getId().equals(bookId)) return true;
         }
         return false;
+    }
+
+    public int getOwed(int day){
+        int total = 0;
+        for(LibraryItem item : itemList){
+            total += item.getLateFee(day);
+        }
+        return total;
     }
 }

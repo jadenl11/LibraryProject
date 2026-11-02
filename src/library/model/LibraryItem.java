@@ -107,6 +107,4 @@ public abstract class LibraryItem
     public boolean getAvailable(){
         return isAvailable;
     }
-
-    public abstract String getType();
 }

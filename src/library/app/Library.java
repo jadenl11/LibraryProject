@@ -151,7 +151,7 @@ public class Library
         Patron patron = findPatron(item.getCheckedOutBy());
         patron.returnItem(findItem(itemId));
         item.setIsCheckedOut(false);
-        String late = (item.getDaysLate(day) == 0) ? "on time" : ", " + item.getDaysLate(day) + "day(s) late";
+        String late = (item.getDaysLate(day) == 0) ? "on time" : ", " + item.getDaysLate(day) + "day(s) late. Fee: " + Money.format(item.getLateFee(day));
         return patron.getName() + " returned \"" + item.getTitle() + "\" (" + itemId + ") " + late + "."; 
     }
 
@@ -198,7 +198,7 @@ public class Library
         commandCount++;
         Patron patron = findPatron(patronId);
         return patron.getName() + " (" + patron.getId() + "):" + " owes " + Money.format(patron.getBalance()) + ", " 
-            + patron.getNumItems() + " item(s) checked out" + patron.getItemStatus(); 
+            + patron.getNumItems() + " item(s) checked out" + patron.getItemStatus(day); 
     }
 
     private String report() throws LibraryException
@@ -206,9 +206,10 @@ public class Library
         commandCount++;
         String output = "";
         for(LibraryItem item : itemList){
-            output += item.getId() + " " + item.getType() + " \"" + item.getTitle() + "\""; 
-            if(item.isCheckedOut())
+            output += item.getId() + " " + item.getClass().getSimpleName().toUpperCase() + " \"" + item.getTitle() + "\""; 
+            if(item.isCheckedOut()){
                 output += " - checked out by " + item.getCheckedOutBy() + ", due day " + item.getDueDay();
+            }
             else
                 output += " - available";
             output += "\n";

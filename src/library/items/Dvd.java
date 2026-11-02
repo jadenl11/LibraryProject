@@ -27,8 +27,4 @@ public class Dvd extends LibraryItem
     {
         return 1000;
     }
-
-    public String getType(){
-        return "DVD";
-    }
 }
