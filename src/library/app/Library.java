@@ -116,6 +116,7 @@ public class Library
                 throw new LibraryException("patron " + id + " already exists.");
             }
         }
+        
         patronList.add(new Patron(id, name));
         return "Added patron " + id + " (" + name + ").";
     }
@@ -124,6 +125,14 @@ public class Library
     private String addItem(String type, String id, String title) throws LibraryException
     {
         commandCount++;
+
+        for(LibraryItem item : itemList){
+            if(item.getId().equals(id)){
+                errorCount++;
+                throw new LibraryException("item " + id + " already exists.");
+            }
+        }
+
         if(type.equals("BOOK"))
             itemList.add(new Book(id, title));
         else if(type.equals("DVD"))
@@ -136,8 +145,20 @@ public class Library
     private String checkOut(String patronId, String itemId) throws LibraryException
     {
         commandCount++;
+
         Patron patron = findPatron(patronId);
         LibraryItem item = findItem(itemId);
+
+        if (item.isCheckedOut() ==  true) {
+            errorCount++;
+            throw new LibraryException("\"" + item.getTitle() + "\" ("+ itemId + ") is already checked out.");
+        }
+
+        if (patron.getNumItems() > 2) {
+            errorCount++;
+            throw new LibraryException(patron.getName() + " already has 3 items checked out.");
+        }
+
         patron.checkOut(item, day);
         item.setIsCheckedOut(true);
         item.setIsCheckedOutBy(patronId, day);
@@ -148,6 +169,12 @@ public class Library
     {
         commandCount++;
         LibraryItem item = findItem(itemId);
+
+        if (item.isCheckedOut() ==  false) {
+            errorCount++;
+            throw new LibraryException("\"" + item.getTitle() + "\" ("+ itemId + ") is not checked out.");
+        }
+
         Patron patron = findPatron(item.getCheckedOutBy());
         patron.returnItem(findItem(itemId));
         item.setIsCheckedOut(false);
@@ -178,15 +205,24 @@ public class Library
     private String pay(String patronId, String cents) throws LibraryException
     {
         commandCount++;
+
         try{
         Patron patron = findPatron(patronId);
-        if(owedByPatron(patronId) < Integer.parseInt(cents)){
+
+        if(patron.getBalance() < Integer.parseInt(cents)){
             errorCount++;
-            throw new LibraryException(patron.getName() + " only owes " + Money.format(owedByPatron(patronId)) + ".");
+            throw new LibraryException(patron.getName() + " only owes " + Money.format(patron.getBalance()) + ".");
         }
+
+        if(Integer.parseInt(cents) < 0){
+            errorCount++;
+            throw new LibraryException("amount must be a positive whole number of cents.");
+        }
+
         patron.pay(Integer.parseInt(cents));
         return patron.getName() + " paid" + Money.format(Integer.parseInt(cents)) + ". Balance: $" + patron.getBalance();
         }
+        
         catch(NumberFormatException e){
             errorCount++;
             throw new LibraryException("amount must be a positive whole number of cents.");
@@ -205,6 +241,7 @@ public class Library
     {
         commandCount++;
         String output = "";
+        
         for(LibraryItem item : itemList){
             output += item.getId() + " " + item.getClass().getSimpleName().toUpperCase() + " \"" + item.getTitle() + "\""; 
             if(item.isCheckedOut()){
@@ -214,7 +251,12 @@ public class Library
                 output += " - available";
             output += "\n";
         }
-        return output + "Total fees owed: " + Money.format(totalFeesOwed()) + "\n" + "Processed " + commandCount  + " commands (" + errorCount + " errors)."; 
+
+        return output + "Total fees owed: " + Money.format(totalFeesOwed());
+    }
+
+    public String finalReport(){
+        return "Processed " + commandCount  + " commands (" + errorCount + " errors)."; 
     }
 
     private Patron findPatron(String patronId) throws LibraryException{
@@ -222,14 +264,17 @@ public class Library
             if(patron.getId().equals(patronId))
                 return patron;
         }
+
         errorCount++;
         throw new LibraryException("no such patron " + patronId + ".");
     }
+
     private LibraryItem findItem(String itemId) throws LibraryException{
         for(LibraryItem item : itemList){
             if(item.getId().equals(itemId))
                 return item;
         }
+
         errorCount++;
         throw new LibraryException("no such item " + itemId + ".");
     }
@@ -238,15 +283,6 @@ public class Library
         int total = 0;
         for(LibraryItem item : itemList)
             total += item.getLateFee(day);
-        return total;
-    }
-
-    private int owedByPatron(String patronId){
-        int total = 0;
-        for(LibraryItem item : itemList){
-            if(item.getCheckedOutBy().equals(patronId))
-                total += item.getLateFee(day);
-        }
         return total;
     }
 }

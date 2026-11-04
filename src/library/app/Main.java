@@ -26,11 +26,12 @@ public class Main
 
         //for(File file: filelist) {
             try{
-                Scanner scanner = new Scanner(filelist.get(0));
+                Scanner scanner = new Scanner(filelist.get(2));
                 Library library = new Library();
+
                 while(scanner.hasNext()){
                     String line = scanner.nextLine();
-                    if(line.charAt(0) == '#') line = scanner.nextLine();
+                    if(line.length() == 0 || line.charAt(0) == '#') line = scanner.nextLine();
 
                     try {
                         String output = library.execute(line);
@@ -40,11 +41,11 @@ public class Main
                         System.out.println("Error: " + e.getMessage());
                     }
                 }
+
+                System.out.println(library.finalReport());
             }
             catch(FileNotFoundException e){
                 System.out.println("Error: could not open script file tests/does_not_exist.txt.");
-            }
-            finally{
             }
         //}
     }

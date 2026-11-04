@@ -38,9 +38,7 @@ public class Patron
     }
 
     public void checkOut(LibraryItem item, int dayI){
-        if(itemList.size() < 3){
-            itemList.add(item);
-        }
+        itemList.add(item);
     }
 
     public void returnItem(LibraryItem item){
