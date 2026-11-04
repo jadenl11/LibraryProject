@@ -26,7 +26,7 @@ public class Main
 
         //for(File file: filelist) {
             try{
-                Scanner scanner = new Scanner(filelist.get(1));
+                Scanner scanner = new Scanner(filelist.get(0));
                 Library library = new Library();
                 while(scanner.hasNext()){
                     String line = scanner.nextLine();
