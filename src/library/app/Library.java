@@ -159,6 +159,11 @@ public class Library
             throw new LibraryException(patron.getName() + " already has 3 items checked out.");
         }
 
+        if(patron.getBalance() < -500){
+            errorCount++;
+            throw new LibraryException(patron.getName() + " owes " + Money.format(-patron.getBalance()) + " and cannot check out items.");
+        }
+
         patron.checkOut(item, day);
         item.setIsCheckedOut(true);
         item.setIsCheckedOutBy(patronId, day);
@@ -177,9 +182,10 @@ public class Library
 
         Patron patron = findPatron(item.getCheckedOutBy());
         patron.returnItem(findItem(itemId));
+        String late = (item.getDaysLate(day) == 0) ? " on time" : ", " + item.getDaysLate(day) + " day(s) late. Fee: " + Money.format(item.getLateFee(day));
+        patron.pay(-item.getLateFee(day));
         item.setIsCheckedOut(false);
-        String late = (item.getDaysLate(day) == 0) ? "on time" : ", " + item.getDaysLate(day) + "day(s) late. Fee: " + Money.format(item.getLateFee(day));
-        return patron.getName() + " returned \"" + item.getTitle() + "\" (" + itemId + ") " + late + "."; 
+        return patron.getName() + " returned \"" + item.getTitle() + "\" (" + itemId + ")" + late + "."; 
     }
 
     /** days arrives as text. It might not be a number. */
@@ -209,7 +215,7 @@ public class Library
         try{
         Patron patron = findPatron(patronId);
 
-        if(patron.getBalance() < Integer.parseInt(cents)){
+        if(-patron.getBalance() < Integer.parseInt(cents)){
             errorCount++;
             throw new LibraryException(patron.getName() + " only owes " + Money.format(patron.getBalance()) + ".");
         }
@@ -220,7 +226,7 @@ public class Library
         }
 
         patron.pay(Integer.parseInt(cents));
-        return patron.getName() + " paid" + Money.format(Integer.parseInt(cents)) + ". Balance: $" + patron.getBalance();
+        return patron.getName() + " paid " + Money.format(Integer.parseInt(cents)) + ". Balance: " + Money.format(-patron.getBalance()) + ".";
         }
         
         catch(NumberFormatException e){
@@ -233,7 +239,7 @@ public class Library
     {
         commandCount++;
         Patron patron = findPatron(patronId);
-        return patron.getName() + " (" + patron.getId() + "):" + " owes " + Money.format(patron.getBalance()) + ", " 
+        return patron.getName() + " (" + patron.getId() + "):" + " owes " + Money.format(-patron.getBalance()) + ", " 
             + patron.getNumItems() + " item(s) checked out" + patron.getItemStatus(day); 
     }
 
@@ -241,6 +247,7 @@ public class Library
     {
         commandCount++;
         String output = "";
+        int money = 0;
         
         for(LibraryItem item : itemList){
             output += item.getId() + " " + item.getClass().getSimpleName().toUpperCase() + " \"" + item.getTitle() + "\""; 
@@ -252,7 +259,11 @@ public class Library
             output += "\n";
         }
 
-        return output + "Total fees owed: " + Money.format(totalFeesOwed());
+        for(Patron patron: patronList){
+            money += patron.getBalance();
+        }
+
+        return output + "Total fees owed: " + Money.format(-money);
     }
 
     public String finalReport(){

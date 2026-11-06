@@ -34,7 +34,7 @@ public class Patron
     }
 
     public void pay(int cents){
-        balance -= cents;
+        balance += cents;
     }
 
     public void checkOut(LibraryItem item, int dayI){
@@ -66,13 +66,5 @@ public class Patron
             if(item.getId().equals(bookId)) return true;
         }
         return false;
-    }
-
-    public int getOwed(int day){
-        int total = 0;
-        for(LibraryItem item : itemList){
-            total += item.getLateFee(day);
-        }
-        return total;
     }
 }
